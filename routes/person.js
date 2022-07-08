@@ -18,4 +18,8 @@ router.delete('/clean', (req, res) => {
   controller.deletePeople(req, res)
 })
 
+router.post('/relationship', (req, res) => {
+  controller.relatePeople(req, res)
+})
+
 module.exports = router
