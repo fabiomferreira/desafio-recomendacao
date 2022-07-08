@@ -26,6 +26,20 @@ class People {
   clearPeople () {
     this.#people = []
   }
+
+  printRecommendations (person) {
+    const friends = person.getFriends()
+    const friendsOfFriends = []
+    friends.forEach(
+      friend => {
+        friendsOfFriends.push(...this.getPerson(friend).getFriends())
+      }
+    )
+    return friendsOfFriends.filter(
+      friend =>
+        !friends.includes(friend) && friend !== person.getCpf()
+    )
+  }
 }
 
 module.exports = People

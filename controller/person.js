@@ -29,6 +29,10 @@ function createPerson (req, res) {
   res.sendStatus(200)
 }
 
+function getPeople (req, res) {
+  return res.send(people.getPeople())
+}
+
 function getPerson (req, res) {
   const { cpf } = req.params
 
@@ -56,13 +60,24 @@ function relatePeople (req, res) {
 
   person1.addFriend(cpf2)
   person2.addFriend(cpf1)
-  console.log(people.getPeople())
-  res.send(200)
+  res.sendStatus(200)
+}
+
+function getRecomendations (req, res) {
+  const { cpf } = req.params
+
+  if (!cpf || !isCpfValid(cpf)) return res.sendStatus(400)
+  const person = people.getPerson(cpf)
+  if (!person) return res.sendStatus(404)
+
+  res.send(people.printRecommendations(person))
 }
 
 module.exports = {
   createPerson,
+  getPeople,
   getPerson,
   deletePeople,
-  relatePeople
+  relatePeople,
+  getRecomendations
 }
