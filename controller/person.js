@@ -35,7 +35,13 @@ function getPerson (req, res) {
   res.send(foundPerson)
 }
 
+function deletePeople (req, res) {
+  people.clearPeople()
+  res.sendStatus(200)
+}
+
 module.exports = {
   createPerson,
-  getPerson
+  getPerson,
+  deletePeople
 }

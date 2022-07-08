@@ -11,6 +11,10 @@ class People {
   addPerson (person) {
     this.#people.push(person)
   }
+
+  clearPeople () {
+    this.#people = []
+  }
 }
 
 module.exports = People

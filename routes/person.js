@@ -14,4 +14,8 @@ router.get('/person/:cpf', (req, res) => {
   controller.getPerson(req, res)
 })
 
+router.delete('/clean', (req, res) => {
+  controller.deletePeople(req, res)
+})
+
 module.exports = router
