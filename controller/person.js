@@ -3,7 +3,8 @@ const Person = require('../model/person.js')
 const people = new People()
 
 function isCpfValid (cpf) {
-  if (cpf.length !== 11) return false
+  const regex = /^\d{11}$/g
+  if (!regex.test(cpf)) return false
 
   return true
 }
