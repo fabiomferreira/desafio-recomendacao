@@ -10,8 +10,8 @@ router.post('/person', (req, res) => {
 	controller.createPerson(req, res)
 })
 
-router.get('/person', (req, res) => {
-	controller.getPeople(req, res)
+router.get('/person/:cpf', (req, res) => {
+	controller.getPerson(req, res)
 })
 
 module.exports =

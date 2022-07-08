@@ -23,11 +23,19 @@ function createPerson(req, res) {
 	res.sendStatus(200);
 }
 
-function getPeople(req, res) {
-	res.send(people.getPeople())
+function getPerson(req, res) {
+	const {cpf} = req.params
+
+	if(!cpf) return res.sendStatus(404);
+
+	const foundPerson =people.getPeople().find(person => person.cpf === cpf); 
+	if (!foundPerson) {
+		return res.sendStatus(404);
+	}
+	res.send(foundPerson);
 }
 
 module.exports = {
 	createPerson,
-	getPeople
+	getPerson
 }
