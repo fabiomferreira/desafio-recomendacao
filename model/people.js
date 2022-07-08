@@ -5,7 +5,18 @@ class People {
   }
 
   getPeople () {
-    return this.#people.map(person => ({ cpf: person.getCpf(), name: person.getName() }))
+    return this.#people.map(person => person.printPerson())
+  }
+
+  getPerson (cpf) {
+    const person = this.#people.find(person => person.getCpf() === cpf)
+
+    return person
+  }
+
+  updatePerson (personToUpdate) {
+    const index = this.#people.findIndex(person => person.getCpf() === personToUpdate.getCpf())
+    this.#people[index] = personToUpdate
   }
 
   addPerson (person) {

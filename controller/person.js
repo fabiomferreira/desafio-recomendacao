@@ -4,7 +4,6 @@ const people = new People()
 
 function isCpfValid (cpf) {
   if (cpf.length !== 11) return false
-  if (people.getPeople().find(person => person.cpf === cpf)) return false
 
   return true
 }
@@ -12,6 +11,7 @@ function isCpfValid (cpf) {
 function isPersonValid (cpf, name) {
   if (!cpf || !name) return false
   if (!isCpfValid(cpf)) return false
+  if (people.getPerson(cpf)) return false
 
   return true
 }
@@ -34,11 +34,11 @@ function getPerson (req, res) {
 
   if (!cpf) return res.sendStatus(404)
 
-  const foundPerson = people.getPeople().find(person => person.cpf === cpf)
+  const foundPerson = people.getPerson(cpf)
   if (!foundPerson) {
     return res.sendStatus(404)
   }
-  res.send(foundPerson)
+  res.send(foundPerson.printPerson())
 }
 
 function deletePeople (req, res) {
@@ -48,8 +48,15 @@ function deletePeople (req, res) {
 
 function relatePeople (req, res) {
   const { cpf1, cpf2 } = req.body
-  if (!isCpfValid(cpf1) || !isCpfValid(cpf2)) return res.send(404)
-  // TODO: fazer relacionamento entre os cpfs
+  if (!isCpfValid(cpf1) || !isCpfValid(cpf2)) return res.sendStatus(404)
+
+  const person1 = people.getPerson(cpf1)
+  const person2 = people.getPerson(cpf2)
+  if (!person1 || !person2) return res.sendStatus(404)
+
+  person1.addFriend(cpf2)
+  person2.addFriend(cpf1)
+  console.log(people.getPeople())
   res.send(200)
 }
 
