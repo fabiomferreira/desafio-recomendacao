@@ -28,17 +28,29 @@ class People {
   }
 
   printRecommendations (person) {
-    const friends = person.getFriends()
-    const friendsOfFriends = []
-    friends.forEach(
+    const directFriends = person.getFriends()
+    const numberOfConections = {}
+    directFriends.forEach(
       friend => {
-        friendsOfFriends.push(...this.getPerson(friend).getFriends())
+        const currentFriendsOfFriends = this.getPerson(friend).getFriends()
+        currentFriendsOfFriends.forEach(
+          currentFriend => {
+            console.log(numberOfConections[currentFriend])
+            numberOfConections[currentFriend] =
+            numberOfConections[currentFriend]
+              ? numberOfConections[currentFriend] + 1
+              : 1
+          })
       }
     )
-    return friendsOfFriends.filter(
-      friend =>
-        !friends.includes(friend) && friend !== person.getCpf()
+    const friendsOfFriends = Object.keys(numberOfConections).sort(
+      (a, b) => numberOfConections[b] - numberOfConections[a]
     )
+    const recommendations = friendsOfFriends.filter(
+      friend =>
+        !directFriends.includes(friend) && friend !== person.getCpf()
+    )
+    return recommendations
   }
 }
 
